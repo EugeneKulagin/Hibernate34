@@ -1,25 +1,31 @@
 package util;
 
-import DAO.UserDao;
-import DAO.UserDaoJDBCImpl;
+import Model.User;
+import Service.UserService;
+import Service.UserServicelmpl;
 
 public class Main {
+    private static final UserService userService = new UserServicelmpl();
+    private static final User user1 = new User("Ivan", "Petrov", (byte) 30);
+    private static final User user2 = new User("Petr", "Ivanov", (byte) 18);
+    private static final User user3 = new User("John", "Smith", (byte) 46);
+    private static final User user4 = new User("Harry", "Potter", (byte) 52);
+
     public static void main(String[] args) {
-        UserDao userDao = new UserDaoJDBCImpl();
+        userService.createUsersTable();
 
-        userDao.createUsersTable();
+        userService.saveUser(user1.getName(), user1.getLastName(), user1.getAge());
 
-        userDao.saveUser("Name1", "LastName1", (byte) 20);
-        userDao.saveUser("Name2", "LastName2", (byte) 25);
-        userDao.saveUser("Name3", "LastName3", (byte) 31);
-        userDao.saveUser("Name4", "LastName4", (byte) 38);
+        userService.saveUser(user2.getName(), user2.getLastName(), user2.getAge());
 
-        System.out.println(userDao.getAllUsers()); // Выводим всех пользователей
+        userService.saveUser(user3.getName(), user3.getLastName(), user3.getAge());
 
-        userDao.removeUserById(1L); // Удаляем пользователя с ID 1
-        System.out.println(userDao.getAllUsers()); // Проверяем оставшихся пользователей
+        userService.saveUser(user4.getName(), user4.getLastName(), user4.getAge());
 
-        userDao.cleanUsersTable();
-        userDao.dropUsersTable();
+        userService.getAllUsers();
+
+        userService.cleanUsersTable();
+
+        userService.dropUsersTable();
     }
 }
