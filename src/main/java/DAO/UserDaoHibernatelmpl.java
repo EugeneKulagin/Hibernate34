@@ -4,6 +4,7 @@ import Model.User;
 import util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -55,7 +56,7 @@ public class UserDaoHibernatelmpl implements UserDao {
     }
 
     @Override
-    public void removeUserById(Long id) {
+    public void removeUserById(long id) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.createSQLQuery("DELETE FROM " + Util.USER_TABLE_NAME + " WHERE id=" + id).executeUpdate();
