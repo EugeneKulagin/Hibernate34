@@ -3,40 +3,35 @@ package Service;
 import DAO.UserDao;
 import DAO.UserDaoHibernatelmpl;
 import Model.User;
-import Service.UserService;
 
 import java.util.List;
 
 public class UserServicelmpl implements UserService {
-    private final UserDao dao;
 
-    public UserServicelmpl() {
-        dao = new UserDaoHibernatelmpl();
-    }
+    UserDao userDao = new UserDaoHibernatelmpl();
 
     public void createUsersTable() {
-        dao.createUsersTable();
+        userDao.createUsersTable();
     }
 
     public void dropUsersTable() {
-        dao.dropUsersTable();
+        userDao.dropUsersTable();
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        dao.saveUser(name, lastName, age);
-        System.out.println("User с именем: " + name + " " + lastName +
-                " " + age + " лет, добавлен в б.д.");
+        userDao.saveUser(name, lastName, age);
+        System.out.println("User с именем — " + name + " добавлен в базу данных");
     }
 
-    public void removeUserById(Long id) {
-        dao.removeUserById(id);
+    public void removeUserById(long id) {
+        userDao.removeUserById(id);
     }
 
     public List<User> getAllUsers() {
-        return dao.getAllUsers();
+        return userDao.getAllUsers();
     }
 
     public void cleanUsersTable() {
-        dao.cleanUsersTable();
+        userDao.cleanUsersTable();
     }
 }

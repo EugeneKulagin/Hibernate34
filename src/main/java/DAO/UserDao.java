@@ -4,7 +4,6 @@ import Model.User;
 
 import java.util.List;
 
-
 public interface UserDao {
     void createUsersTable();
 

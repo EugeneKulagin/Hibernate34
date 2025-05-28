@@ -3,27 +3,26 @@ import Service.UserService;
 import Service.UserServicelmpl;
 
 public class Main {
-    private static final UserService userService = new UserServicelmpl();
-    private static final User user1 = new User("Ivan", "Petrov", (byte) 30);
-    private static final User user2 = new User("Petr", "Ivanov", (byte) 18);
-    private static final User user3 = new User("John", "Smith", (byte) 46);
-    private static final User user4 = new User("Harry", "Potter", (byte) 52);
-
     public static void main(String[] args) {
+        UserService userService = new UserServicelmpl();
         userService.createUsersTable();
 
-        userService.saveUser(user1.getName(), user1.getLastName(), user1.getAge());
+        userService.saveUser("Dire", "Wolf", (byte) 150);
+        userService.saveUser("Tyrion", "Lannister", (byte) 30);
+        userService.saveUser("Daenerys", "Targaryen", (byte) 28);
+        userService.saveUser("John", "Snow", (byte) 25);
 
-        userService.saveUser(user2.getName(), user2.getLastName(), user2.getAge());
-
-        userService.saveUser(user3.getName(), user3.getLastName(), user3.getAge());
-
-        userService.saveUser(user4.getName(), user4.getLastName(), user4.getAge());
+        userService.removeUserById(3);
 
         userService.getAllUsers();
+
+        for (User user : userService.getAllUsers()) {
+            System.out.println(user);
+        }
 
         userService.cleanUsersTable();
 
         userService.dropUsersTable();
+
     }
 }

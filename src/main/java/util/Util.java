@@ -1,17 +1,43 @@
 package util;
 
+import java.util.Properties;
+
 import Model.User;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import org.hibernate.service.ServiceRegistry;
 
 public class Util {
-    public static final String USER_TABLE_NAME = "hello";
-
-    // Connect to MySQL
-    private final static Configuration configuration = new Configuration().addAnnotatedClass(User.class);
+    private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            try {
+                Configuration configuration = new Configuration();
 
-        return configuration.buildSessionFactory();
+                Properties properties = new Properties();
+                properties.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+                properties.put(Environment.URL, "jdbc:mysql://localhost:3306/mydbtest");
+                properties.put(Environment.USER, "root");
+                properties.put(Environment.PASS, "mother60");
+                properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+                properties.put(Environment.SHOW_SQL, "true");
+                properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+
+                configuration.setProperties(properties);
+                configuration.addAnnotatedClass(User.class);
+
+                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                        .applySettings(configuration.getProperties()).build();
+
+                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return sessionFactory;
     }
 }
