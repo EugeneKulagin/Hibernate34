@@ -1,5 +1,3 @@
-package util;
-
 import Model.User;
 import Service.UserService;
 import Service.UserServicelmpl;
