@@ -70,14 +70,17 @@ public class UserDaoHibernatelmpl implements UserDao {
         List<User> users = null;
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
+
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteria = builder.createQuery(User.class);
             Root<User> root = criteria.from(User.class);
             criteria.select(root);
+
             users = session.createQuery(criteria).getResultList();
+
             session.getTransaction().commit();
         } catch (Exception e) {
-            sessionFactory.getCurrentSession().getTransaction().rollback();
+            e.printStackTrace();
         }
         return users;
     }
